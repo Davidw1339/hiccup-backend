@@ -88,6 +88,7 @@ def get_poll():
     json_arr = []
     for poll in cursor:
         json_arr.append({
+            'id': poll['id'],
             'title': poll['title'],
             'text': poll['text'],
             'up': poll['up'],
