@@ -25,6 +25,48 @@ def down_vote():
     db.livepoll.update({"id":idnum}, { "$set": {"down": downvotes}}, upsert=False)
     return "success"
 
+@app.route('/add_event', methods=['POST'])
+def add_event():
+    text = request.form['text']
+    time = request.form['time']
+    event = db.events.insert_one({
+        "text": text,
+        "time": time
+    })
+    return "done"
+
+@app.route('/get_event', methods=['GET'])
+def get_event():
+    cursor = db.events.find()
+    json_arr = []
+    for event in cursor:
+        json_arr.append({
+            'text': event['text'],
+            'time': event['time']
+        })
+    return json.dumps(json_arr);
+
+
+@app.route('/add_announce', methods=['POST'])
+def add_announce():
+    text = request.form['text']
+    time = request.form['time']
+    announcement = db.announcements.insert_one({
+        "text": text,
+        "time": time
+    })
+    return "done"
+
+@app.route('/get_announce', methods=['GET'])
+def get_announce():
+    cursor = db.announcements.find()
+    json_arr = []
+    for announcement in cursor:
+        json_arr.append({
+            'text': announcement['text'],
+            'time': announcement['time']
+        })
+    return json.dumps(json_arr);
 
 @app.route('/add_poll', methods=['POST'])
 def add_poll():
